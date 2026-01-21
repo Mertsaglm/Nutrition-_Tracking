@@ -134,6 +134,79 @@ GÖREV: Yiyecekleri tespit et, miktarları hesapla, toplam besin değerlerini bu
       confidence: 0
     }
   }
+
+  async generateSampleDayMealPlan(params: {
+    dailyCalories: number
+    protein: number
+    carbs: number
+    fat: number
+    mealCount: number
+    dietaryPreferences: string[]
+    allergies: string[]
+    goal: string
+  }): Promise<any> {
+    if (!this.model) {
+      throw new Error('Gemini API anahtarı bulunamadı')
+    }
+
+    const { dailyCalories, protein, carbs, fat, mealCount, dietaryPreferences, allergies, goal } = params
+
+    const goalText = {
+      lose_weight: 'kilo verme',
+      gain_weight: 'kilo alma',
+      build_muscle: 'kas yapma',
+      maintain: 'kilonu koruma'
+    }[goal] || 'sağlıklı beslenme'
+
+    const prompt = `Sen bir beslenme uzmanısın. Aşağıdaki hedeflere göre SADECE 1 GÜNLÜK örnek beslenme programı oluştur.
+
+HEDEFLER:
+- Günlük Kalori: ${dailyCalories} kcal
+- Protein: ${protein}g
+- Karbonhidrat: ${carbs}g
+- Yağ: ${fat}g
+- Öğün Sayısı: ${mealCount}
+- Amaç: ${goalText}
+${dietaryPreferences.length > 0 ? `- Diyet Tercihleri: ${dietaryPreferences.join(', ')}` : ''}
+${allergies.length > 0 ? `- ALERJİLER (ASLA KULLANMA): ${allergies.join(', ')}` : ''}
+
+ÖNEMLİ KURALLAR:
+1. Alerjik besinleri ASLA kullanma
+2. Diyet tercihlerine uy (örn: vejetaryen ise et yok, vegan ise hayvansal ürün yok)
+3. Türk mutfağına uygun, gerçekçi öğünler
+4. Her öğün için besin değerlerini hesapla
+5. Toplam günlük hedeflere yakın ol
+
+ÇIKTI FORMATI (sadece JSON):
+{
+  "meals": [
+    {
+      "name": "Kahvaltı",
+      "time": "08:00",
+      "foods": [
+        {"name": "Yumurta", "amount": "2 adet", "calories": 140, "protein": 12, "carbs": 1, "fat": 10},
+        {"name": "Tam buğday ekmeği", "amount": "2 dilim", "calories": 160, "protein": 6, "carbs": 30, "fat": 2}
+      ],
+      "totals": {"calories": 300, "protein": 18, "carbs": 31, "fat": 12}
+    }
+  ],
+  "dailyTotals": {"calories": ${dailyCalories}, "protein": ${protein}, "carbs": ${carbs}, "fat": ${fat}},
+  "note": "Kısa motivasyon notu"
+}`
+
+    try {
+      const result = await this.model.generateContent(prompt)
+      const response = await result.response
+      const text = response.text()
+      
+      // JSON'u temizle ve parse et
+      const cleanText = text.replace(/```json\n?|\n?```/g, '').trim()
+      return JSON.parse(cleanText)
+    } catch (error) {
+      console.error('Örnek program oluşturulamadı:', error)
+      throw error
+    }
+  }
 }
 
 export const geminiService = new GeminiService()

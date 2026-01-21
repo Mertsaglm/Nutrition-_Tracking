@@ -15,6 +15,7 @@ AI destekli, kişiselleştirilmiş beslenme takip uygulaması. Bilimsel formüll
 - Mifflin-St Jeor formülü ile BMR hesaplama
 - Aktivite seviyesine göre TDEE hesaplama
 - Hedefe özel makro besin dağılımı (protein, karbonhidrat, yağ)
+- **Örnek günlük beslenme programı** - Diyet tercihleri ve alerjilere uygun
 
 ### 🎯 Akıllı Hedef Belirleme
 - Kilo verme, kilo alma, kas yapma veya koruma
@@ -109,9 +110,9 @@ Uygulama [http://localhost:3000](http://localhost:3000) adresinde çalışacak.
 ### 2. Onboarding'i Tamamlayın
 - **Adım 1:** Fiziksel özelliklerinizi girin (yaş, boy, kilo)
 - **Adım 2:** Hedefinizi ve sürenizi belirleyin
-- **Adım 3:** Diyet tercihlerinizi seçin
+- **Adım 3:** Diyet tercihlerinizi seçin (vejetaryen, vegan, alerjiler vb.)
 - **Adım 4:** Hesaplanan planınızı inceleyin
-- **Adım 5:** Onaylayın ve başlayın
+- **Adım 5:** AI ile oluşturulan örnek günlük programı görün ve onaylayın
 
 ### 3. Öğün Ekleyin
 - Dashboard'da öğün türünü seçin

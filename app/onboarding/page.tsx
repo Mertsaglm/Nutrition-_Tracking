@@ -34,6 +34,10 @@ export default function OnboardingPage() {
   // Step 4: Hesaplanan plan
   const [calculatedPlan, setCalculatedPlan] = useState<any>(null)
 
+  // Step 5: Örnek beslenme programı
+  const [sampleMealPlan, setSampleMealPlan] = useState<any>(null)
+  const [loadingSamplePlan, setLoadingSamplePlan] = useState(false)
+
   useEffect(() => {
     const checkUser = async () => {
       try {
@@ -110,6 +114,41 @@ export default function OnboardingPage() {
       alert('Bir hata oluştu, lütfen tekrar dene')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const generateSampleMealPlan = async () => {
+    if (!calculatedPlan) return
+
+    setLoadingSamplePlan(true)
+    try {
+      const response = await fetch('/api/sample-meal-plan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          dailyCalories: calculatedPlan.targets.calories,
+          protein: calculatedPlan.targets.protein,
+          carbs: calculatedPlan.targets.carbs,
+          fat: calculatedPlan.targets.fat,
+          mealCount,
+          dietaryPreferences,
+          allergies: allergies.split(',').map(a => a.trim()).filter(Boolean),
+          goal
+        })
+      })
+
+      const result = await response.json()
+      
+      if (result.success) {
+        setSampleMealPlan(result.data)
+      } else {
+        throw new Error(result.error)
+      }
+    } catch (error) {
+      console.error('Örnek program oluşturulamadı:', error)
+      alert('Örnek program oluşturulamadı. Dashboard\'a geçebilirsin.')
+    } finally {
+      setLoadingSamplePlan(false)
     }
   }
 
@@ -472,12 +511,16 @@ export default function OnboardingPage() {
 
       case 5:
         return (
-          <div className="space-y-6 text-center">
-            <div className="text-6xl mb-4">🎉</div>
-            <h2 className="text-2xl font-bold text-gray-900">Hazırsın!</h2>
-            <p className="text-gray-600">
-              Profilin tamamlandı. Kişiselleştirilmiş beslenme planın hazır!
-            </p>
+          <div className="space-y-6">
+            <div className="text-center">
+              <div className="text-6xl mb-4">🎉</div>
+              <h2 className="text-2xl font-bold text-gray-900">Hazırsın!</h2>
+              <p className="text-gray-600 mt-2">
+                Profilin tamamlandı. Kişiselleştirilmiş beslenme planın hazır!
+              </p>
+            </div>
+
+            {/* Özet */}
             <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-left">
               <h3 className="font-semibold text-green-900 mb-3">📋 Özet:</h3>
               <div className="space-y-2 text-sm text-green-800">
@@ -498,8 +541,87 @@ export default function OnboardingPage() {
                 {dietaryPreferences.length > 0 && (
                   <p>• <strong>Tercihler:</strong> {dietaryPreferences.join(', ')}</p>
                 )}
+                {allergies && (
+                  <p>• <strong>Alerjiler:</strong> {allergies}</p>
+                )}
               </div>
             </div>
+
+            {/* Örnek Beslenme Programı */}
+            <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-semibold text-purple-900">✨ Örnek 1 Günlük Program</h3>
+                <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full">
+                  İlham Verici Örnek
+                </span>
+              </div>
+
+              {!sampleMealPlan && !loadingSamplePlan && (
+                <div className="text-center py-6">
+                  <p className="text-sm text-purple-700 mb-4">
+                    Senin için özel hazırlanmış örnek bir günlük program görmek ister misin?
+                  </p>
+                  <button
+                    onClick={generateSampleMealPlan}
+                    className="bg-purple-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors"
+                  >
+                    🍽️ Örnek Program Oluştur
+                  </button>
+                </div>
+              )}
+
+              {loadingSamplePlan && (
+                <div className="text-center py-8">
+                  <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-purple-200 border-t-purple-600 mb-3"></div>
+                  <p className="text-sm text-purple-700">
+                    Senin için özel program hazırlanıyor...
+                  </p>
+                </div>
+              )}
+
+              {sampleMealPlan && (
+                <div className="space-y-3">
+                  {sampleMealPlan.meals?.map((meal: any, index: number) => (
+                    <div key={index} className="bg-white rounded-lg p-4 shadow-sm">
+                      <div className="flex justify-between items-start mb-3">
+                        <div>
+                          <h4 className="font-semibold text-gray-900">{meal.name}</h4>
+                          <p className="text-xs text-gray-500">{meal.time}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-bold text-purple-600">{meal.totals?.calories || 0} kcal</p>
+                          <p className="text-xs text-gray-600">
+                            P:{meal.totals?.protein || 0}g C:{meal.totals?.carbs || 0}g Y:{meal.totals?.fat || 0}g
+                          </p>
+                        </div>
+                      </div>
+                      <div className="space-y-1">
+                        {meal.foods?.map((food: any, foodIndex: number) => (
+                          <div key={foodIndex} className="flex justify-between text-sm">
+                            <span className="text-gray-700">• {food.name} ({food.amount})</span>
+                            <span className="text-gray-500">{food.calories} kcal</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+
+                  {sampleMealPlan.note && (
+                    <div className="bg-purple-100 border border-purple-200 rounded-lg p-3 mt-4">
+                      <p className="text-sm text-purple-800">
+                        💡 {sampleMealPlan.note}
+                      </p>
+                    </div>
+                  )}
+
+                  <p className="text-xs text-center text-purple-600 mt-3">
+                    Bu sadece bir örnektir. Dashboard'da kendi öğünlerini kaydedebilirsin!
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Bilgilendirme */}
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <p className="text-sm text-blue-800">
                 💡 Dashboard'da öğünlerini kaydetmeye başlayabilir, ilerlemeni takip edebilirsin!
@@ -571,6 +693,8 @@ export default function OnboardingPage() {
                     return
                   }
                   setStep(5)
+                  // Step 5'e geçince otomatik örnek program oluştur
+                  setTimeout(() => generateSampleMealPlan(), 500)
                 }}
                 disabled={!canProceedToStep5}
                 className="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
