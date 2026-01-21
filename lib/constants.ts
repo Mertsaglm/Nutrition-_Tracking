@@ -44,10 +44,10 @@ export const UI_CONFIG = {
 // Beslenme sabitleri
 export const NUTRITION_CONFIG = {
   defaultTargets: {
-    calories: 3400,
-    protein: 200,
-    carbs: 360,
-    fat: 130
+    calories: 0,
+    protein: 0,
+    carbs: 0,
+    fat: 0
   },
   macroRatios: {
     protein: { min: 0.15, max: 0.35 }, // %15-35

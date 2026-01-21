@@ -56,6 +56,9 @@ export default function DashboardPage() {
             carbs: nutritionPlan.carbs_g,
             fat: nutritionPlan.fat_g
           })
+          
+          // Günü initialize et (hedefler set edildikten sonra)
+          initializeDay(todayString)
         }
         
         console.log('Auth check complete, user authenticated')
@@ -67,7 +70,7 @@ export default function DashboardPage() {
     }
 
     checkAuth()
-  }, [router, setDailyTargets])
+  }, [router, setDailyTargets, initializeDay, todayString])
 
   useEffect(() => {
     if (!loading) {
