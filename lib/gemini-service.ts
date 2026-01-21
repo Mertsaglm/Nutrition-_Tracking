@@ -14,7 +14,7 @@ class GeminiService {
     if (apiKey) {
       try {
         this.genAI = new GoogleGenerativeAI(apiKey)
-        this.model = this.genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' })
+        this.model = this.genAI.getGenerativeModel({ model: 'gemini-2.5-flash' }) 
         console.log('Gemini model başarıyla oluşturuldu')
       } catch (error) {
         console.error('Gemini model oluşturma hatası:', error)
@@ -82,16 +82,31 @@ class GeminiService {
 BESIN VERİTABANI (100g başına):
 ${JSON.stringify(commonFoods, null, 2)}
 
+ÇOK ÖNEMLİ - ÇİĞ vs PİŞMİŞ KURALLARI:
+1. Kullanıcı "pişmiş", "haşlanmış", "kızartılmış" gibi kelimeler kullanmazsa, yemek genellikle PİŞMİŞ haldedir
+2. Tahıllar ve baklagiller pişince 2-3 kat şişer, kalori yoğunluğu düşer:
+   - Pirinç (çiğ): 363 kcal/100g → Pilav (pişmiş): ~120 kcal/100g (3x şişer)
+   - Makarna (kuru): 390 kcal/100g → Makarna (pişmiş): ~130 kcal/100g (3x şişer)
+   - Bulgur (çiğ): 350 kcal/100g → Bulgur pilavı (pişmiş): ~120 kcal/100g (3x şişer)
+   - Mercimek (kuru): 351 kcal/100g → Mercimek (pişmiş): ~115 kcal/100g (3x şişer)
+   - Nohut (kuru): 376 kcal/100g → Nohut (pişmiş): ~125 kcal/100g (3x şişer)
+   - Fasulye (kuru): 333 kcal/100g → Fasulye (pişmiş): ~110 kcal/100g (3x şişer)
+3. Etler pişince su kaybeder, kalori yoğunluğu artar:
+   - Tavuk göğsü (çiğ): 104 kcal/100g → Tavuk göğsü (pişmiş): ~165 kcal/100g
+   - Dana eti (çiğ): 156 kcal/100g → Dana eti (pişmiş): ~250 kcal/100g
+4. Sebzeler pişince hafif su kaybeder ama kalori değişimi minimal
+5. Kullanıcı "çiğ", "kuru", "ham" derse o zaman çiğ değerleri kullan
+
 KULLANICI:
 Öğün: ${mealType}
 Hedef: ${targetCalories} kcal
 Açıklama: "${description}"
 
-GÖREV: Yiyecekleri tespit et, miktarları hesapla, toplam besin değerlerini bul.
+GÖREV: Yiyecekleri tespit et, PİŞMİŞ/ÇİĞ durumunu belirle, miktarları hesapla, toplam besin değerlerini bul.
 
 ÇIKTI (sadece JSON):
 {
-  "foods": [{"name": "yiyecek", "amount": 100, "unit": "g", "nutrition": {"calories": 0, "protein": 0, "carbs": 0, "fat": 0}}],
+  "foods": [{"name": "yiyecek (pişmiş)", "amount": 100, "unit": "g", "nutrition": {"calories": 0, "protein": 0, "carbs": 0, "fat": 0}}],
   "totalNutrition": {"calories": 0, "protein": 0, "carbs": 0, "fat": 0},
   "analysis": "Kısa analiz",
   "suggestions": "Kısa öneri",
