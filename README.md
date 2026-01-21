@@ -1,65 +1,68 @@
-# 🥗 Beslenme Takip Sistemi
+# 🥗 Nutrition Tracker
 
-AI destekli, kişiselleştirilmiş beslenme takip uygulaması. Kullanıcıların fiziksel özelliklerine ve hedeflerine göre bilimsel formüllerle hesaplanmış beslenme planları sunar.
-
-![Next.js](https://img.shields.io/badge/Next.js-14-black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
-![Supabase](https://img.shields.io/badge/Supabase-Database-green)
-![Gemini AI](https://img.shields.io/badge/Gemini-AI-orange)
+AI destekli, kişiselleştirilmiş beslenme takip uygulaması. Bilimsel formüllerle hesaplanan günlük kalori ve makro besin hedefleri ile sağlıklı yaşam yolculuğunuza başlayın.
 
 ## ✨ Özellikler
 
-### 🎯 Kişiselleştirilmiş Beslenme Planı
-- **Bilimsel Formüller:** Mifflin-St Jeor formülü ile BMR hesaplama
-- **Dinamik Kalori:** Hedefe göre otomatik kalori hesaplama
-- **Makro Optimizasyonu:** Protein, karbonhidrat, yağ dağılımı
-- **Öğün Planlaması:** Hedefe göre optimal öğün sayısı ve zamanları
+### 🤖 AI Destekli Besin Analizi
+- **Google Gemini AI** ile doğal dilde yemek açıklaması
+- Otomatik besin değeri hesaplama
+- 500+ Türk yiyeceği içeren kapsamlı veritabanı
+- Akıllı yiyecek tanıma ve kategorilendirme
 
-### 🤖 AI Destekli Analiz
-- **Google Gemini API:** Doğal dilde yemek açıklaması
-- **Otomatik Besin Analizi:** 500+ Türk yiyeceği veritabanı
-- **Akıllı Öneriler:** Hedefe göre beslenme önerileri
-- **Güven Skoru:** Analiz kalitesi gösterimi
+### 📊 Kişiselleştirilmiş Beslenme Planı
+- **Bilimsel formüllerle** hesaplanan günlük kalori hedefi
+- Mifflin-St Jeor formülü ile BMR hesaplama
+- Aktivite seviyesine göre TDEE hesaplama
+- Hedefe özel makro besin dağılımı (protein, karbonhidrat, yağ)
 
-### 📊 Kapsamlı Takip
-- **Günlük İlerleme:** Kalori ve makro besin takibi
-- **Öğün Geçmişi:** Detaylı öğün kayıtları
-- **Kilo Takibi:** Haftalık kilo değişimi
-- **İstatistikler:** Haftalık ve aylık raporlar
+### 🎯 Akıllı Hedef Belirleme
+- Kilo verme, kilo alma, kas yapma veya koruma
+- Gerçekçi süre önerileri (0.5 kg/hafta)
+- Öğün sayısı optimizasyonu (3-6 öğün)
+- Diyet tercihleri ve alerji yönetimi
 
-### 🔐 Güvenli ve Ölçeklenebilir
-- **Supabase Auth:** Güvenli kullanıcı yönetimi
-- **Row Level Security:** Veri izolasyonu
-- **PostgreSQL:** Güçlü veritabanı
-- **Responsive Design:** Mobil, tablet, desktop uyumlu
+### 📱 Modern Kullanıcı Arayüzü
+- Glassmorphism tasarım
+- Responsive tasarım (mobil/tablet/desktop)
+- Gerçek zamanlı ilerleme takibi
+- Öğün geçmişi ve detaylı analiz
 
-## 🚀 Hızlı Başlangıç
+## 🚀 Teknolojiler
 
-### Gereksinimler
-- Node.js 18+ 
-- npm veya yarn
-- Supabase hesabı
-- Google Gemini API anahtarı
+- **Frontend:** Next.js 14, React 18, TypeScript
+- **Styling:** Tailwind CSS, Lucide Icons
+- **State Management:** Zustand
+- **Database:** Supabase (PostgreSQL)
+- **Authentication:** Supabase Auth
+- **AI:** Google Gemini API
+- **Date Handling:** date-fns
 
-### Kurulum
+## 📦 Kurulum
 
-1. **Projeyi klonlayın**
+### 1. Projeyi Klonlayın
+
 ```bash
-git clone https://github.com/Mertsaglam/nutrition-tracker.git
+git clone https://github.com/kullanici-adi/nutrition-tracker.git
 cd nutrition-tracker
 ```
 
-2. **Bağımlılıkları yükleyin**
+### 2. Bağımlılıkları Yükleyin
+
 ```bash
 npm install
 ```
 
-3. **Ortam değişkenlerini ayarlayın**
+### 3. Environment Değişkenlerini Ayarlayın
+
+`.env.example` dosyasını `.env.local` olarak kopyalayın:
+
 ```bash
 cp .env.example .env.local
 ```
 
-`.env.local` dosyasını düzenleyin:
+Ardından `.env.local` dosyasını düzenleyin:
+
 ```env
 # Supabase
 NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
@@ -69,70 +72,62 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 GEMINI_API_KEY=your-gemini-api-key
 ```
 
-4. **Supabase veritabanını kurun**
-- Supabase Dashboard → SQL Editor
-- `supabase-schema.sql` dosyasını çalıştırın
-- Detaylı kurulum için: [SUPABASE_SETUP.md](./SUPABASE_SETUP.md)
+### 4. Supabase Veritabanını Kurun
 
-5. **Uygulamayı başlatın**
+1. [Supabase Dashboard](https://supabase.com/dashboard)'a gidin
+2. SQL Editor'ı açın
+3. `supabase-schema.sql` dosyasının içeriğini yapıştırın
+4. "Run" butonuna tıklayın
+
+### 5. Uygulamayı Başlatın
+
 ```bash
 npm run dev
 ```
 
-Tarayıcınızda açın: [http://localhost:3000](http://localhost:3000)
+Uygulama [http://localhost:3000](http://localhost:3000) adresinde çalışacak.
 
-## 📖 Dokümantasyon
+## 🔑 API Anahtarları Nasıl Alınır?
 
-- **[SUPABASE_SETUP.md](./SUPABASE_SETUP.md)** - Veritabanı kurulum rehberi
-- **[GUNCELLEMELER.md](./GUNCELLEMELER.md)** - Proje güncellemeleri ve özellikler
-- **[OGUN_SISTEMI_ACIKLAMA.md](./OGUN_SISTEMI_ACIKLAMA.md)** - Öğün sistemi detayları
+### Supabase
+1. [supabase.com](https://supabase.com) adresine gidin
+2. Yeni proje oluşturun
+3. Settings > API bölümünden URL ve anon key'i kopyalayın
 
-## 🏗️ Teknoloji Stack
+### Google Gemini
+1. [Google AI Studio](https://makersuite.google.com/app/apikey) adresine gidin
+2. "Create API Key" butonuna tıklayın
+3. API anahtarınızı kopyalayın
 
-### Frontend
-- **Next.js 14** - React framework (App Router)
-- **TypeScript** - Tip güvenliği
-- **Tailwind CSS** - Modern styling
-- **Zustand** - State management
-- **Lucide React** - İkonlar
+## 📖 Kullanım
 
-### Backend & Database
-- **Supabase** - Backend as a Service
-- **PostgreSQL** - İlişkisel veritabanı
-- **Row Level Security** - Veri güvenliği
+### 1. Kayıt Olun
+- Ana sayfadan "Ücretsiz Başla" butonuna tıklayın
+- Email ve şifre ile kayıt olun
+- Email doğrulama linkine tıklayın
 
-### AI & API
-- **Google Gemini API** - Doğal dil işleme
-- **Next.js API Routes** - Backend endpoints
+### 2. Onboarding'i Tamamlayın
+- **Adım 1:** Fiziksel özelliklerinizi girin (yaş, boy, kilo)
+- **Adım 2:** Hedefinizi ve sürenizi belirleyin
+- **Adım 3:** Diyet tercihlerinizi seçin
+- **Adım 4:** Hesaplanan planınızı inceleyin
+- **Adım 5:** Onaylayın ve başlayın
 
-## 📁 Proje Yapısı
+### 3. Öğün Ekleyin
+- Dashboard'da öğün türünü seçin
+- Yediğiniz yemeği doğal dilde yazın
+  - Örnek: "2 yumurta, 1 dilim ekmek, 1 bardak süt"
+- AI otomatik olarak besin değerlerini hesaplar
+- Kaydet butonuna tıklayın
 
-```
-├── app/                      # Next.js App Router
-│   ├── api/                 # API endpoints
-│   ├── auth/                # Kimlik doğrulama sayfaları
-│   ├── dashboard/           # Ana dashboard
-│   ├── onboarding/          # Kullanıcı onboarding
-│   └── page.tsx             # Ana sayfa
-├── components/              # React bileşenleri
-│   ├── DashboardHeader.tsx
-│   ├── MealLogger.tsx
-│   ├── MealHistory.tsx
-│   └── NutritionOverview.tsx
-├── lib/                     # Utility fonksiyonları
-│   ├── auth.ts             # Kimlik doğrulama
-│   ├── database-service.ts # Veritabanı işlemleri
-│   ├── gemini-service.ts   # AI servisi
-│   ├── nutrition-calculator.ts # Kalori hesaplama
-│   ├── nutrition-store.ts  # State management
-│   └── types.ts            # TypeScript tipleri
-├── supabase-schema.sql     # Veritabanı şeması
-└── comprehensive-nutrition-database.json # Besin veritabanı
-```
+### 4. İlerlemenizi Takip Edin
+- Günlük kalori ve makro hedeflerinizi görün
+- Öğün geçmişinizi inceleyin
+- Hedeflerinize ne kadar yaklaştığınızı takip edin
 
-## 🔬 Bilimsel Temeller
+## 🧮 Bilimsel Formüller
 
-### BMR Hesaplama (Mifflin-St Jeor)
+### BMR (Bazal Metabolizma Hızı)
 ```
 Erkek: BMR = 10 × kilo + 6.25 × boy - 5 × yaş + 5
 Kadın: BMR = 10 × kilo + 6.25 × boy - 5 × yaş - 161
@@ -155,67 +150,89 @@ Sağlıklı kilo değişimi: ±0.5 kg/hafta
 Günlük fark = (hedef kg × 7700) / (hedef gün)
 ```
 
-## 🎯 Kullanım Akışı
+### Makro Dağılımı
+**Kilo Verme:**
+- Protein: %35 (yüksek)
+- Karbonhidrat: %35 (orta)
+- Yağ: %30 (orta)
 
-1. **Kayıt Ol** - Email ile hesap oluştur
-2. **Onboarding** - Fiziksel özellikler ve hedefler
-3. **Plan Hesaplama** - Bilimsel formüllerle kişisel plan
-4. **Öğün Ekleme** - Doğal dilde yemek açıklaması
-5. **AI Analiz** - Otomatik besin değeri hesaplama
-6. **İlerleme Takibi** - Günlük ve haftalık raporlar
+**Kilo Alma:**
+- Protein: %20 (orta)
+- Karbonhidrat: %50 (yüksek)
+- Yağ: %30 (orta)
 
-## 🌟 Öne Çıkan Özellikler
+**Kas Yapma:**
+- Protein: %30 (çok yüksek, min 2g/kg)
+- Karbonhidrat: %40 (yüksek)
+- Yağ: %30 (orta)
 
-### Dinamik Kalori Hesaplama
-Her kullanıcı için özel hesaplama:
-- Bazal metabolizma (BMR)
-- Günlük enerji ihtiyacı (TDEE)
-- Hedef kalori (sağlıklı kilo değişim hızı)
-- Makro besin dağılımı (hedefe göre optimize)
+**Koruma:**
+- Protein: %25 (orta)
+- Karbonhidrat: %45 (orta)
+- Yağ: %30 (orta)
 
-### Akıllı Öğün Planlaması
-Hedefe göre optimal öğün sayısı:
-- **Kilo Verme:** 3 öğün (Kahvaltı, Öğle, Akşam)
-- **Kilo Alma:** 5 öğün (sık öğün, metabolizma aktif)
-- **Kas Yapma:** 5 öğün (protein sentezi için düzenli)
-- **Koruma:** 4 öğün (dengeli)
+## 📁 Proje Yapısı
 
-### Türk Mutfağı Desteği
-- 500+ Türk yiyeceği
-- Gram başına besin değerleri
-- 20+ kategori
-- Yerel ölçü birimleri (bardak, kaşık, vb.)
+```
+nutrition-tracker/
+├── app/                      # Next.js App Router
+│   ├── api/                 # API endpoints
+│   ├── auth/                # Authentication pages
+│   ├── dashboard/           # Dashboard page
+│   ├── onboarding/          # Onboarding flow
+│   └── page.tsx             # Landing page
+├── components/              # React components
+│   ├── DashboardHeader.tsx
+│   ├── MealLogger.tsx
+│   ├── MealHistory.tsx
+│   └── NutritionOverview.tsx
+├── lib/                     # Utility functions
+│   ├── auth.ts             # Authentication helpers
+│   ├── database-service.ts # Database operations
+│   ├── gemini-service.ts   # AI service
+│   ├── nutrition-calculator.ts # Calculation engine
+│   ├── supabase.ts         # Supabase client
+│   └── types.ts            # TypeScript types
+├── comprehensive-nutrition-database.json # Besin veritabanı
+├── supabase-schema.sql     # Database schema
+└── supabase-reset.sql      # Database reset script
+```
+
+## 🗄️ Veritabanı Şeması
+
+### Tablolar
+- **user_profiles:** Kullanıcı profil bilgileri
+- **nutrition_plans:** Beslenme planları
+- **meal_logs:** Öğün kayıtları
+- **daily_progress:** Günlük ilerleme
+- **weight_logs:** Kilo takibi
+
+### Özellikler
+- Row Level Security (RLS) ile güvenlik
+- Otomatik trigger'lar ile veri senkronizasyonu
+- Yardımcı fonksiyonlar ile kolay sorgulama
 
 ## 🔒 Güvenlik
 
-- **Row Level Security (RLS)** - Her kullanıcı sadece kendi verilerini görür
-- **Environment Variables** - API anahtarları güvenli
-- **Supabase Auth** - Güvenli kimlik doğrulama
-- **SQL Injection** - Parametreli sorgular
+- Supabase Auth ile güvenli kimlik doğrulama
+- Row Level Security (RLS) ile veri izolasyonu
+- Environment variables ile API key koruması
+- Client-side validation ile veri doğrulama
 
-## 📱 Responsive Design
+## 🚀 Deployment
 
-- **Mobile First** - Mobil öncelikli tasarım
-- **Glassmorphism** - Modern UI
-- **Touch Friendly** - Dokunmatik uyumlu
-- **PWA Ready** - Progressive Web App hazır
+### Vercel (Önerilen)
 
-## 🚧 Geliştirme
+1. [Vercel](https://vercel.com) hesabı oluşturun
+2. GitHub repository'nizi bağlayın
+3. Environment variables'ı ekleyin
+4. Deploy butonuna tıklayın
 
-### Development
-```bash
-npm run dev
-```
-
-### Build
-```bash
-npm run build
-```
-
-### Lint
-```bash
-npm run lint
-```
+### Diğer Platformlar
+- Netlify
+- Railway
+- Render
+- Docker
 
 ## 🤝 Katkıda Bulunma
 
@@ -231,8 +248,7 @@ Bu proje MIT lisansı altında lisanslanmıştır.
 
 ## 👨‍💻 Geliştirici
 
-**Mert Sağlam**
-- GitHub: [@Mertsaglam](https://github.com/Mertsaglam)
+Mert Sağlam
 
 ## 🙏 Teşekkürler
 
@@ -241,12 +257,6 @@ Bu proje MIT lisansı altında lisanslanmıştır.
 - [Google Gemini](https://ai.google.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Lucide Icons](https://lucide.dev/)
-
-## 📞 Destek
-
-Sorularınız için:
-- Issue açın: [GitHub Issues](https://github.com/Mertsaglam/nutrition-tracker/issues)
-- Dokümantasyonu okuyun: [Docs](./SUPABASE_SETUP.md)
 
 ---
 
