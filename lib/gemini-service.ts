@@ -14,7 +14,7 @@ class GeminiService {
     if (apiKey) {
       try {
         this.genAI = new GoogleGenerativeAI(apiKey)
-        this.model = this.genAI.getGenerativeModel({ model: 'gemini-2.5-flash' }) // Daha stabil model
+        this.model = this.genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' })
         console.log('Gemini model başarıyla oluşturuldu')
       } catch (error) {
         console.error('Gemini model oluşturma hatası:', error)
