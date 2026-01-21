@@ -13,8 +13,6 @@ export default function SignUpPage() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [showVerificationMessage, setShowVerificationMessage] = useState(false)
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
@@ -33,13 +31,9 @@ export default function SignUpPage() {
 
     try {
       await authService.signUp({ email, password, name })
-      setShowVerificationMessage(true)
-      
-      // 2 saniye sonra onboarding'e yönlendir
-      setTimeout(() => {
-        router.push('/onboarding')
-        router.refresh()
-      }, 2000)
+      // Direkt onboarding'e yönlendir
+      router.push('/onboarding')
+      router.refresh()
     } catch (err: any) {
       setError(err.message || 'Kayıt olurken bir hata oluştu')
       setLoading(false)
@@ -54,19 +48,7 @@ export default function SignUpPage() {
           <p className="text-gray-600">Sağlıklı yaşam yolculuğuna başla</p>
         </div>
 
-        {showVerificationMessage ? (
-          <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-            <div className="text-5xl mb-4">✅</div>
-            <h3 className="text-lg font-semibold text-green-900 mb-2">Kayıt Başarılı!</h3>
-            <p className="text-sm text-green-700 mb-4">
-              Email adresine bir doğrulama kodu gönderdik. Lütfen email'ini kontrol et ve hesabını doğrula.
-            </p>
-            <p className="text-xs text-green-600">
-              Yönlendiriliyorsun...
-            </p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
                 {error}
@@ -101,9 +83,6 @@ export default function SignUpPage() {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 placeholder="ornek@email.com"
               />
-              <p className="text-xs text-gray-500 mt-1">
-                📧 Doğrulama kodu bu adrese gönderilecek
-              </p>
             </div>
 
             <div>
@@ -144,7 +123,6 @@ export default function SignUpPage() {
               {loading ? 'Kayıt yapılıyor...' : 'Kayıt Ol'}
             </button>
           </form>
-        )}
 
         <div className="mt-6 text-center">
           <p className="text-gray-600">
